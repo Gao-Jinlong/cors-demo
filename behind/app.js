@@ -10,6 +10,14 @@ const testRouter = require('./routes/test')
 
 var app = express()
 
+// 添加中间件，解决跨域问题
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  // 添加可接受的 header 类型，携带参数的 post 请求会发送一个 Content-Type: application/json 的请求头
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "jade")

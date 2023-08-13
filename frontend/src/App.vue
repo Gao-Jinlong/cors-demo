@@ -11,16 +11,40 @@ axios.defaults.baseURL = 'http://localhost:3000'
 
 // 跨域连接
 axios.get('/api',{
+  params: {
+    name: encodeURI('张三'),
+    age: 18
+  },
 }).then(res => {
   console.log(res.headers)
 })
 
-axios.post('/api/update',{
-  name: 'zhangsan',
-  age: 18
-}).then(res => {
-  console.log(res.data)
-})
+// axios.post('/api/update',{
+//   name: 'zhangsan',
+//   age: 18
+// },{
+//   headers: {
+//     'Content-Type': 'application/json', // 带参数的 post 请求会在头部
+//     "Authorization":'123'
+//   }
+// }).then(res => {
+//   console.log(res.data)
+// })
+
+const xhr = new XMLHttpRequest()
+xhr.withCredentials=false
+
+xhr.onreadystatechange = function(){
+  if(xhr.readyState === 4){
+    console.log(xhr.responseText)
+  }
+}
+xhr.open('POST', 'http://localhost:3000/api/update', true)
+xhr.setRequestHeader('Content-Type','application/json')
+xhr.send(JSON.stringify({
+  name:'Ginlon',
+  age:'18'
+}))
 </script>
 <style scoped>
 .box{
