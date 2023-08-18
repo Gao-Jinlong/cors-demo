@@ -1,10 +1,6 @@
 <template>
   <h1>App</h1>
-  <div class="box">
-    <div class="item" v-for="(_, index) of new Array(1000).fill(0)">
-      {{ index }}
-    </div>
-  </div>
+  <div class="box"></div>
 </template>
 <script setup lang="ts">
 import axios from "axios"
@@ -19,7 +15,7 @@ axios.defaults.withCredentials = true
 
 // 跨域连接
 axios
-  .get("/api", {
+  .get("/", {
     params: {
       name: encodeURI("张三"),
       age: 18,
@@ -29,34 +25,57 @@ axios
     console.log(res.headers)
   })
 
-// axios.post('/api/update',{
-//   name: 'zhangsan',
-//   age: 18
-// },{
-//   headers: {
-//     'Content-Type': 'application/json', // 带参数的 post 请求会在头部
-//     "Authorization":'123'
+// axios
+//   .post(
+//     "/api/update",
+//     {
+//       name: "zhangsan",
+//       age: 18,
+//     },
+//     {
+//       headers: {
+//         "Content-Type": "application/json", // 带参数的 post 请求会在头部
+//         Authorization: "123",
+//       },
+//     }
+//   )
+//   .then((res) => {
+//     console.log(res.data)
+//   })
+
+// const xhr = new XMLHttpRequest()
+// xhr.withCredentials = false
+
+// xhr.onreadystatechange = function () {
+//   if (xhr.readyState === 4) {
+//     console.log("ready state", xhr.responseText)
 //   }
-// }).then(res => {
-//   console.log(res.data)
-// })
+// }
+// xhr.open("POST", "http://localhost:3000/api/update", true)
+// xhr.setRequestHeader("Content-Type", "application/json")
+// xhr.send(
+//   JSON.stringify({
+//     name: "Ginlon",
+//     age: "18",
+//   })
+// )
 
-const xhr = new XMLHttpRequest()
-xhr.withCredentials = false
+// websocket
+const socketConnect = new WebSocket("ws://localhost:3000/")
+socketConnect.onopen = function (evt) {
+  console.log("websocket open", evt)
 
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4) {
-    console.log(xhr.responseText)
-  }
+  console.log("websocket send", socketConnect.extensions)
 }
-xhr.open("POST", "http://localhost:3000/api/update", true)
-xhr.setRequestHeader("Content-Type", "application/json")
-xhr.send(
-  JSON.stringify({
-    name: "Ginlon",
-    age: "18",
-  })
-)
+socketConnect.onmessage = function (e) {
+  console.log("websocket message", e.data)
+}
+socketConnect.onclose = function () {
+  console.log("websocket close")
+}
+socketConnect.onerror = function (err) {
+  console.log("websocket error", err)
+}
 </script>
 <style scoped>
 .box {
