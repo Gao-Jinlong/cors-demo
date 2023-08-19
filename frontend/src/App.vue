@@ -90,6 +90,25 @@ const closeSocket = () => {
 const sendSocket = () => {
   socketConnect.send("hello")
 }
+
+// EventSource
+const eventSource = new EventSource("http://localhost:3000/event")
+eventSource.onmessage = function (e) {
+  const box = document.querySelector(".box")!
+  const item = document.createElement("div")
+  item.innerText = "EventSource:" + e.data
+  box.appendChild(item)
+}
+eventSource.onopen = function (e) {
+  console.log("EventSource open", e)
+}
+eventSource.onerror = function (err) {
+  console.error("EventSource error: ", err)
+}
+
+eventSource.addEventListener("update", function (e) {
+  console.log("update", e.data)
+})
 </script>
 <style scoped>
 .box {
