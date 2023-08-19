@@ -1,6 +1,8 @@
 <template>
   <h1>App</h1>
   <div class="box"></div>
+  <button @click="sendSocket">send message</button>
+  <button @click="closeSocket">close socket</button>
 </template>
 <script setup lang="ts">
 import axios from "axios"
@@ -13,17 +15,17 @@ document.cookie = "age=18"
 // 设置 cookie
 axios.defaults.withCredentials = true
 
-// 跨域连接
-axios
-  .get("/", {
-    params: {
-      name: encodeURI("张三"),
-      age: 18,
-    },
-  })
-  .then((res) => {
-    console.log(res.headers)
-  })
+// // 跨域连接
+// axios
+//   .get("/", {
+//     params: {
+//       name: encodeURI("张三"),
+//       age: 18,
+//     },
+//   })
+//   .then((res) => {
+//     console.log(res.headers)
+//   })
 
 // axios
 //   .post(
@@ -61,20 +63,32 @@ axios
 // )
 
 // websocket
-const socketConnect = new WebSocket("ws://localhost:3000/")
+const socketConnect = new WebSocket("ws://localhost:3000/socketTest")
 socketConnect.onopen = function (evt) {
   console.log("websocket open", evt)
-
-  console.log("websocket send", socketConnect.extensions)
 }
 socketConnect.onmessage = function (e) {
-  console.log("websocket message", e.data)
+  console.log("websocket message", e)
+  const box = document.querySelector(".box")!
+  const item = document.createElement("div")
+  item.innerText = e.data
+  box.appendChild(item)
+  setTimeout(() => {
+    socketConnect.send("confirm")
+  }, 100)
 }
 socketConnect.onclose = function () {
   console.log("websocket close")
 }
 socketConnect.onerror = function (err) {
-  console.log("websocket error", err)
+  console.error("websocket error", err)
+}
+
+const closeSocket = () => {
+  socketConnect.close()
+}
+const sendSocket = () => {
+  socketConnect.send("hello")
 }
 </script>
 <style scoped>

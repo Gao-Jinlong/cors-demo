@@ -1,6 +1,5 @@
 var express = require("express")
 var router = express.Router()
-require("express-ws")(router)
 /* GET home page. */
 router.get("/", function (req, res, next) {
   // 打印 cookie.name
@@ -14,16 +13,6 @@ router.get("/", function (req, res, next) {
 router.post("/update", function (req, res, next) {
   // console.log('request body', req.body)
   res.send("success update from server")
-})
-
-// websocket 链接
-router.ws("/socket", function (ws, req) {
-  console.log("websocket connect success", ws)
-  ws.on("message", function (msg) {
-    console.log("from client msg", msg)
-    ws.send("server response")
-    ws.close()
-  })
 })
 
 module.exports = router

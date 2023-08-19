@@ -1,6 +1,4 @@
-var createError = require("http-errors")
 var express = require("express")
-var expressWs = require("express-ws")
 var path = require("path")
 var cookieParser = require("cookie-parser")
 var logger = require("morgan")
@@ -9,8 +7,16 @@ var indexRouter = require("./routes/index")
 var usersRouter = require("./routes/users")
 const testRouter = require("./routes/test")
 
-expressWs(app)
 var app = express()
+
+// view engine setup
+app.set("views", path.join(__dirname, "views"))
+app.set("view engine", "jade")
+
+app.use(logger("dev"))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 
 // 添加中间件，解决跨域问题
 app.use(function (req, res, next) {
@@ -28,14 +34,6 @@ app.use(function (req, res, next) {
   next()
 })
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"))
-app.set("view engine", "jade")
-
-app.use(logger("dev"))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
 // static file
 app.use(
   "/static",
@@ -51,9 +49,6 @@ app.use("/users", usersRouter)
 app.use("/api", testRouter)
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404))
-})
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -64,16 +59,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500)
   res.render("error")
-})
-
-// websocket
-app.ws("/socketTest", function (ws, req) {
-  ws.on("message", function (msg) {
-    console.log("from socket message", msg)
-
-    ws.send("from websocket")
-  })
-  console.log("socket open", req)
 })
 
 module.exports = app
