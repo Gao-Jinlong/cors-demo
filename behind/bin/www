@@ -22,31 +22,8 @@ app.set("port", port)
  */
 
 var server = http.createServer(app)
-
 expressWs(app, server)
 
-// websocket
-let index = 0
-app.ws("/socketTest", function (ws, req) {
-  ws.on("open", function () {
-    console.log("socket open")
-    return ws.send("from server", index++)
-  })
-  ws.on("message", function (msg) {
-    ws.send("from server" + index++)
-    if (index > 10) {
-      ws.close()
-    }
-  })
-  ws.on("close", function () {
-    console.log("socket closed")
-    index = 0
-  })
-})
-
-app.use(function (req, res, next) {
-  next(createError(404))
-})
 /**
  * Listen on provided port, on all network interfaces.
  */

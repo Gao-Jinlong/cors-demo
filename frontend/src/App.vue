@@ -63,7 +63,7 @@ axios.defaults.withCredentials = true
 // )
 
 // websocket
-const socketConnect = new WebSocket("ws://localhost:3000/socketTest")
+const socketConnect = new WebSocket("ws://localhost:3000/socket")
 socketConnect.onopen = function (evt) {
   console.log("websocket open", evt)
 }
