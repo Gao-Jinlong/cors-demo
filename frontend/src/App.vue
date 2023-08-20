@@ -1,11 +1,21 @@
 <template>
   <h1>App</h1>
+  <img
+    crossorigin="anonymous"
+    width="200"
+    height="200"
+    class="avatar"
+    src="http://localhost:3000/static/images/avatar.jpg"
+  />
+  <canvas width="200" height="200" id="canvas"></canvas>
+
   <div class="box"></div>
   <button @click="sendSocket">send message</button>
   <button @click="closeSocket">close socket</button>
 </template>
 <script setup lang="ts">
 import axios from "axios"
+import { onMounted } from "vue"
 
 axios.defaults.baseURL = "http://localhost:3000"
 
@@ -108,6 +118,21 @@ eventSource.onerror = function (err) {
 
 eventSource.addEventListener("update", function (e) {
   console.log("update", e.data)
+})
+
+onMounted(() => {
+  const img = new Image()
+  img.src = "http://localhost:3000/static/images/avatar.jpg"
+
+  const canvas = document.querySelector("#canvas")! as HTMLCanvasElement
+  const ctx = canvas.getContext("2d")!
+
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0, 200, 200)
+    // 读取图像数据
+    const imageData = ctx.getImageData(0, 0, 200, 200)
+    console.log(imageData)
+  }
 })
 </script>
 <style scoped>
