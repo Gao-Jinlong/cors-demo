@@ -1,10 +1,32 @@
 var express = require("express")
 var router = express.Router()
 /* GET home page. */
+router.get("/setCookie", function (req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+  res.header("Access-Control-Allow-Credentials", true)
+  res.cookie("remember-me", "2", {
+    expires: new Date(Date.now() + 900000),
+    httpOnly: true,
+    sameSite: "None",
+    secure,
+  })
+  res.json({ code: 200, msg: "success" })
+
+  res.send()
+})
+router.options("/", function (req, res, next) {
+  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+  // res.header("Access-Control-Allow-Credentials", true)
+  res.send()
+})
 router.get("/", function (req, res, next) {
-  // 打印 cookie.name
-  console.log("cookie", req.cookies.name)
-  res.header("Access-Control-Allow-Credentials", "true") // 携带 cookie 需要配置
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+  // 携带 cookie
+  res.header("Access-Control-Allow-Credentials", true)
+
+  // 打印 cookie
+  console.log("cookies--------", req.cookies)
+
   // 允许跨域配置，get 的跨域请求也需要配置
   // 解码 query
   res.send("success response api")
