@@ -2,22 +2,19 @@ var express = require("express")
 var router = express.Router()
 /* GET home page. */
 router.get("/setCookie", function (req, res, next) {
-  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
-  // res.header("Access-Control-Allow-Credentials", true)
   res.cookie("remember-me", "2", {
     expires: new Date(Date.now() + 900000),
     httpOnly: true,
+    // sameSite: "none", // 仅在 https 时才可用
+    // secure: true,
   })
-  res.json({ code: 200, msg: "success" })
-
   res.send()
 })
-router.options("/", function (req, res, next) {
-  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
-  // res.header("Access-Control-Allow-Credentials", true)
-  console.log("req-cookie", req.cookies)
-  res.send()
-})
+// router.options("/", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+//   console.log("req-cookie", req.cookies)
+//   res.send()
+// })
 router.get("/", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
   // 携带 cookie

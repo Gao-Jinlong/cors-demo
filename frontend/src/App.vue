@@ -22,10 +22,12 @@ import { onMounted } from "vue"
 // 设置 cookie
 // axios.defaults.withCredentials = true
 
-axios.get("/api/setCookie").then(() => {
+axios.get("/api/setCookie").then((res) => {
   console.log("get cookie", document.cookie)
+  document.cookie = "remember-me=3"
+
+  axios.get("/api", {})
 })
-axios.get("/api")
 
 // // 跨域连接
 // axios
