@@ -16,12 +16,12 @@ app.use(cookieParser())
 
 // 添加中间件，解决跨域问题
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173") // 携带凭据时需要指明域名
+  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173") // 携带凭据时需要指明域名
   // 添加可接受的 header 类型，携带参数的 post 请求会发送一个 Content-Type: application/json 的请求头
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Connection, Sec-WebSocket-Extensions, Sec-WebSocket-Key, Sec-WebSocket-Version, Sec-WebSocket-Protocol, Upgrade"
-  )
+  // res.header(
+  //   "Access-Control-Allow-Headers",
+  //   "Content-Type, Authorization, Connection, Sec-WebSocket-Extensions, Sec-WebSocket-Key, Sec-WebSocket-Version, Sec-WebSocket-Protocol, Upgrade"
+  // )
   res.header(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, DELETE, PATCH"
@@ -31,14 +31,7 @@ app.use(function (req, res, next) {
 })
 
 // static file
-app.use(
-  "/static",
-  express.static(path.join(__dirname, "public"), {
-    setHeaders: function (res, path, stat) {
-      res.header("Access-Control-Allow-Origin", "*")
-    },
-  })
-)
+app.use("/static", express.static(path.join(__dirname, "public")))
 
 var indexRouter = require("./routes/index")
 var usersRouter = require("./routes/users")

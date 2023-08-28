@@ -17,17 +17,24 @@
 import axios from "axios"
 import { onMounted } from "vue"
 
-// axios.defaults.baseURL = "http://localhost:3000"
+// axios.defaults.baseURL = "https://localhost:3001"
 
 // 设置 cookie
-// axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true
 
-axios.get("/api/setCookie").then((res) => {
-  console.log("get cookie", document.cookie)
-  document.cookie = "remember-me=3"
+axios
+  .get("/api/setCookie", {
+    baseURL: "https://localhost:3001",
+  })
+  .then((res) => {
+    console.log("get cookie", document.cookie)
+    document.cookie = "remember-me=3"
 
-  axios.get("/api", {})
-})
+    axios.get("/api", {
+      withCredentials: true,
+      baseURL: "https://localhost:3001",
+    })
+  })
 
 // // 跨域连接
 // axios
