@@ -1,7 +1,7 @@
 <template>
   <h1>App</h1>
   <img
-    crossorigin="anonymous"
+    id="imgElement"
     width="200"
     height="200"
     class="avatar"
@@ -132,16 +132,21 @@ eventSource.addEventListener("update", function (e) {
 })
 
 onMounted(() => {
-  const img = new Image()
-  img.src = "http://localhost:3000/static/images/avatar.jpg"
+  // const img = new Image()
+  // img.src = "http://localhost:3000/static/images/avatar.jpg"
 
   const canvas = document.querySelector("#canvas")! as HTMLCanvasElement
   const ctx = canvas.getContext("2d")!
 
+  const img = document.querySelector("#imgElement")
+  console.log(img)
   img.onload = () => {
+    console.log("img onload")
     ctx.drawImage(img, 0, 0, 200, 200)
     // 读取图像数据
     const imageData = ctx.getImageData(0, 0, 200, 200)
+    console.log("data")
+
     console.log(imageData)
   }
 })
