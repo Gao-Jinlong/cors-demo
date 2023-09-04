@@ -13,22 +13,27 @@ router.get("/setCookie", function (req, res, next) {
   })
   res.send()
 })
-// router.options("/", function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
-//   console.log("req-cookie", req.cookies)
-//   res.send()
-// })
+router.options("/update", function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*") // 是否允许跨域
+  res.header("Access-Control-Allow-Headers", "Content-Type") // 允许携带的 header 标识
+  res.send()
+  res.end()
+})
 router.get("/", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://127.0.0.1:5173")
+  // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
   // 携带 cookie
-  res.header("Access-Control-Allow-Credentials", true)
+  // res.header("Access-Control-Allow-Credentials", true)
   // 打印 cookie
-  console.log("cookies--------", req.cookies)
+  // console.log("cookies--------", req.cookies)
   res.send("success response api")
+  res.end()
 })
 
 router.post("/update", function (req, res, next) {
   // console.log('request body', req.body)
+  res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
+
+  console.log(req.body)
   res.send("success update from server")
 })
 

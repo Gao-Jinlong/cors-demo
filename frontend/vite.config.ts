@@ -10,8 +10,8 @@ export default defineConfig({
     //   cert: fs.readFileSync("../file.crt"),
     // },
     // proxy: {
-    //   "/api/setCookie": {
-    //     target: "https://localhost:3001",
+    //   "/api": {
+    //     target: "http://localhost:3000",
     //     changeOrigin: true,
     //     rewrite: (path) => path.replace(/^\/api/, "/api"),
     //     secure: false, // 不验证安全证书
