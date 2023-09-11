@@ -24,7 +24,7 @@ import { onMounted } from "vue"
 
 // axios
 //   .get("/api", {
-//     // baseURL: "http://localhost:3000",
+//     baseURL: "http://localhost:3000",
 //   })
 //   .then((res) => {
 //     console.log("GET 请求不会跨域!", res)
@@ -33,15 +33,15 @@ import { onMounted } from "vue"
 //     console.log("GET 请求也会跨域！", err)
 //   })
 
-// const xhr = new XMLHttpRequest()
+const xhr = new XMLHttpRequest()
 
-// xhr.onreadystatechange = function () {
-//   if (xhr.readyState === 4) {
-//     console.log("ready state", xhr.responseText)
-//   }
-// }
-// xhr.open("GET", "http://localhost:3000/api", true)
-// xhr.send()
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4) {
+    console.log("ready state", xhr.responseText)
+  }
+}
+xhr.open("GET", "http://localhost:3000/api", true)
+xhr.send()
 
 // axios
 //   .get("/api/setCookie", {
@@ -87,21 +87,21 @@ import { onMounted } from "vue"
 //     console.log(res.data)
 //   })
 
-const xhr = new XMLHttpRequest()
+// const xhr = new XMLHttpRequest()
 
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4) {
-    console.log("ready state", xhr.responseText)
-  }
-}
-xhr.open("POST", "http://localhost:3000/api/update", true)
-// xhr.setRequestHeader("Content-Type", "application/json")
-xhr.send(
-  JSON.stringify({
-    name: "Ginlon",
-    age: 18,
-  })
-)
+// xhr.onreadystatechange = function () {
+//   if (xhr.readyState === 4) {
+//     console.log("ready state", xhr.responseText)
+//   }
+// }
+// xhr.open("POST", "http://localhost:3000/api/update", true)
+// // xhr.setRequestHeader("Content-Type", "application/json")
+// xhr.send(
+//   JSON.stringify({
+//     name: "Ginlon",
+//     age: 18,
+//   })
+// )
 
 // // websocket
 // const socketConnect = new WebSocket("ws://localhost:3000/socket")
