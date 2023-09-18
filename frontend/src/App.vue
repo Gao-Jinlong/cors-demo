@@ -12,10 +12,13 @@
   <div class="box"></div>
   <button @click="sendSocket">send message</button>
   <button @click="closeSocket">close socket</button>
+
+  <FileOperation></FileOperation>
 </template>
 <script setup lang="ts">
 import axios from "axios"
 import { onMounted } from "vue"
+import FileOperation from "./FileOperation.vue"
 
 // axios.defaults.baseURL = "https://localhost:3001"
 
