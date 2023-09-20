@@ -10,9 +10,9 @@ import "./customError.d"
 class CustomError<C, T> extends Error {
   public readonly single?: C
   public readonly data?: T
-  public constructor(message: string, code?: C, data?: T) {
+  public constructor(message: string, single?: C, data?: T) {
     super(message)
-    this.single = code
+    this.single = single
     this.data = data
   }
 }
